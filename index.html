@@ -1,0 +1,81 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+<style type="text/css">
+body{
+font:15px/1.5 Arial, Helvetica,sans-serif;
+}
+
+.spinner-1:before{
+content: "";
+box-sizing: border-box;
+position: absolute;
+top:50%;
+left: 50%;
+height: 60px;
+width: 60px;
+margin-top: -30px;
+margin-left: -30px;
+border-radius: 50%;
+border:6px solid transparent;
+border-top-color: blue;
+animation: spinner 0.7s linear infinite;
+}
+
+@keyframes spinner {
+to { transform: rotate(360deg); }
+}
+
+li { background-color:#BDBDBD; }
+li:nth-child(odd) { background-color:green; }
+</style>
+
+<div class="container">
+<div class="jumbotron text-center">
+<h3><b>Natural Language Processing App</b></h3>
+<p>Evaluating Everyday Language</p>
+</div>
+</div>
+
+<div class="container">
+<form method="POST" action="{{ url_for('analyse')}}" id="myForm">
+<label><strong>Enter Your Text Below</strong></label><br>
+<textarea class="form-control" rows="10" name="rawtext"></textarea><br>
+
+<input type="submit" value="Submit" class="btn btn-primary">
+<input type="button" onclick="myFunction()" value="Clear" class="btn btn-dark">
+</form>
+</div>
+
+<hr/>
+
+<div class="container main">
+
+<h5>Total Tokens: {{ number_of_tokens }}</h5>
+<h5>Sentiment: {{ blob_sentiment }}</h5>
+<h5>Subjectivity: {{ blob_subjectivity }}</h5>
+<h5>Time Taken: {{ final_time }} seconds</h5>
+
+<hr/>
+
+<h5>Your Text:</h5>
+<p>{{ received_text }}</p>
+
+<hr/>
+
+<h5>Summary Words:</h5>
+<ul>
+{% for i in summary %}
+<li>{{ i }}</li>
+{% endfor %}
+</ul>
+
+</div>
+
+<script>
+function myFunction() {
+document.getElementById("myForm").reset();
+}
+</script>
+
+{% endblock %}
